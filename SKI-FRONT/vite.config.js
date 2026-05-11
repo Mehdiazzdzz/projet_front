@@ -3,5 +3,16 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [svelte()],
+  plugins: [
+    svelte()
+  ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://193.46.198.245:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  }
 })
