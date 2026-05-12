@@ -1,74 +1,57 @@
 <script>
   export let sejour;
   export let handleDelete;
-  
+  export let handleEdit = () => {}; 
 </script>
 
-<div class="card">
-  <img src={sejour.imageUrl} alt={sejour.nom} />
-  <div class="container">
-    <h3>{sejour.nom}</h3>
-    <p><b>Ville :</b> {sejour.ville}</p>
-    <div class="footer-card">
-      <p class="price">{sejour.prix} € / nuit</p>
-      <button class="btn-supprimer" on:click={handleDelete}>Supprimer</button>
-      <button class="btn-modifier" on:click={handleDelete}>modifier</button>
+<div class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+  
+  <!-- Image avec coins arrondis en haut -->
+  <img 
+    src={sejour.imageUrl} 
+    alt={sejour.nom} 
+    class="h-64 w-full object-cover rounded-t-xl" 
+  />
+  
+  <!-- Conteneur des informations -->
+  <div class="px-4 py-3 w-full">
+    <!-- Ville (à la place de la Marque) -->
+    <span class="text-gray-400 mr-3 uppercase text-xs font-semibold tracking-wider">
+      {sejour.ville}
+    </span>
+    
+    <!-- Nom du logement (à la place du Nom du produit) -->
+    <h3 class="text-lg font-bold text-black truncate block capitalize m-0 mt-1">
+      {sejour.nom}
+    </h3>
+    
+    <!-- Ligne du Prix et des Boutons -->
+    <div class="flex items-center mt-3 mb-1">
+      
+      <!-- Prix -->
+      <p class="text-lg font-semibold text-black cursor-auto my-0">
+        {sejour.prix} € <span class="text-sm text-gray-500 font-normal">/ nuit</span>
+      </p>
+      
+      <!-- Actions (à la place de l'icône du panier) -->
+      <div class="ml-auto flex gap-2">
+        <!-- Bouton Modifier (Style discret) -->
+        <button 
+          class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1.5 px-3 rounded-lg border-none cursor-pointer text-xs font-bold transition-colors" 
+          on:click={handleEdit}
+        >
+          Modifier
+        </button>
+
+        <!-- Bouton Supprimer (Style Alerte) -->
+        <button 
+          class="bg-red-500 hover:bg-red-600 text-white py-1.5 px-3 rounded-lg border-none cursor-pointer text-xs font-bold transition-colors" 
+          on:click={handleDelete}
+        >
+          Supprimer
+        </button>
+      </div>
+
     </div>
   </div>
 </div>
-
-<style>
-  .card {
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
-
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.15);
-  }
-
-  img {
-    width: 100%;
-    height: 50%;
-    object-fit: cover;
-  }
-
-  .container {
-    padding: 15px;
-    font-family: sans-serif;
-  }
-
-  .footer-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-  }
-
-  .price {
-    font-weight: bold;
-    color: #2c3e50;
-    font-size: 1.2em;
-    margin: 0;
-  }
-
-  .btn-modifier,
-  .btn-supprimer {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9em;
-  }
-
-  .btn-modifier:hover,
-  .btn-supprimer:hover {
-    background-color: #c0392b;
-  }
-</style>

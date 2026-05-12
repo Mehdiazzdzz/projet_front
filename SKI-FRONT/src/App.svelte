@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import LogementCard from "./LogementCard.svelte";
+  import './app.css';
 
   /** @type {any[]} */
   let logements = [];
@@ -45,24 +46,53 @@
   }
 </script>
 
-<div class="layout">
-  <header>
-    <div class="logo-container">
-      <img src="/logo.svg" alt="Logo" class="logo" />
-      <h1>Ski-Location</h1>
+<div class="flex flex-col min-h-screen">
+  <header class="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-screen-md border border-gray-100 bg-white/80 py-3 shadow backdrop-blur-lg md:top-6 md:rounded-3xl lg:max-w-screen-lg">
+    <div class="px-4">
+        <div class="flex items-center justify-between">
+            
+            <div class="flex shrink-0">
+                <a aria-current="page" class="flex items-center gap-3" href="/">
+                    <img class="h-8 md:h-10 w-auto" src="/logo.svg" alt="Logo Ski-Location">
+                    <h1 class="m-0 text-lg md:text-xl font-bold text-gray-900 whitespace-nowrap">Ski-Location</h1>
+                </a>
+            </div>
+
+            <!-- Zone des boutons d'action -->
+            <div class="flex items-center justify-end gap-3">
+                <button type="button" class="hidden items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all duration-150 hover:bg-gray-50 sm:inline-flex">
+                    + Ajouter
+                </button>
+                <button type="button" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-150 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                    Se connecter
+                </button>
+            </div>
+
+        </div>
     </div>
-    <div class="header-actions">
-    <button class="btn" type="button">+ Ajouter</button>
-    <button class="btn" type="button"> Se connecter </button>
-</div>
   </header>
 
-  <main>
-    <div class="grid">
+  <!-- Nouvelle Section Hero avec l'image de fond ajoutée ici -->
+  <section class="w-full">
+    <div class="w-full h-[520px] bg-[url('../src/assets/hero-back')] bg-cover bg-no-repeat bg-center flex flex-col justify-center items-center">
+        <div class="w-full mx-auto">
+            <form>
+                <div class="xl:w-1/2 lg:w-[60%] sm:w-[70%] w-[90%] mx-auto flex gap-2 md:mt-6 mt-4 mx-4">
+                    <input type="text" class="border border-gray-400 w-full p-2 rounded-md text-xl pl-2" placeholder="Rechercher une destination..." />
+                    <button type="submit" class="px-[10px] bg-blue-500 text-lg text-white rounded-md font-semibold">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </section>
+
+  <!-- Contenu Principal avec la grille des logements -->
+  <main class="flex-grow py-10 px-5 max-w-[1200px] mx-auto w-full">
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
       {#if loading}
         <p>Chargement des logements en cours...</p>
       {:else if error}
-        <p style="color: red;">{error}</p>
+        <p class="text-red-500">{error}</p>
       {:else}
         {#each logements as logement (logement.id)}
           <LogementCard 
@@ -74,89 +104,12 @@
     </div>
   </main>
 
-  <footer>
-    <p>&copy; 2026 - Plateforme de location de ski</p>
+  <footer class="bg-gray-200 text-white py-4 px-3 mt-auto">
+    <div class="w-full md:w-1/2 md:text-center md:mb-0 mb-8 mx-auto">
+      <ul class="list-reset flex justify-center flex-wrap text-xs md:text-sm gap-3">
+        <li><a href="#contactUs" class="text-gray-500 hover:text-gray-800 transition-colors">Contact</a></li>
+        <li class="mx-4"><a href="/privacy" class="text-gray-500 hover:text-gray-800 transition-colors">Privacy Policy</a></li>
+      </ul>
+    </div>
   </footer>
 </div>
-<style>
-  .layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  header {
-    background-color: #8d84ce;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo {
-    height: 70px;
-  }
-
-  header h1 {
-    margin: 0;
-    font-size: 1.4rem;
-    color: #111827;
-  }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  /* --- Style unifié pour les boutons --- */
-  .btn {
-    background-color: #111827;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 10px 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 160px;
-    gap: 8px;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-  }
-
-  .btn:hover {
-    background-color: #374151;
-    transform: translateY(-2px);
-  }
-
-  main {
-    flex-grow: 1;
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-  }
-
-  footer {
-    text-align: center;
-    padding: 20px;
-    background-color: white;
-    color: #6b7280;
-    font-size: 0.9rem;
-  }
-</style>
