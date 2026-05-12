@@ -47,48 +47,33 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-  <header class="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-screen-md border border-gray-100 bg-white/80 py-3 shadow backdrop-blur-lg md:top-6 md:rounded-3xl lg:max-w-screen-lg">
-    <div class="px-4">
-        <div class="flex items-center justify-between">
-            
-            <div class="flex shrink-0">
-                <a aria-current="page" class="flex items-center gap-3" href="/">
-                    <img class="h-8 md:h-10 w-auto" src="/logo.svg" alt="Logo Ski-Location">
-                    <h1 class="m-0 text-lg md:text-xl font-bold text-gray-900 whitespace-nowrap">Ski-Location</h1>
-                </a>
-            </div>
+  
+  <header class="flex justify-between items-center p-4 bg-white shadow">
+    <div class="flex items-center gap-2">
+        <h1 class="text-2xl font-bold">Ski-Location</h1>
+    </div>
 
-            <!-- Zone des boutons d'action -->
-            <div class="flex items-center justify-end gap-3">
-                <button type="button" class="hidden items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all duration-150 hover:bg-gray-50 sm:inline-flex">
-                    + Ajouter
-                </button>
-                <button type="button" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-150 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
-                    Se connecter
-                </button>
-            </div>
-
-        </div>
+    <div class="flex gap-4">
+        <button class="border border-blue-500 text-blue-500 px-4 py-2 rounded-lg">
+            + Ajouter
+        </button>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">
+            Se connecter
+        </button>
     </div>
   </header>
 
-  <!-- Nouvelle Section Hero avec l'image de fond ajoutée ici -->
-  <section class="w-full">
-    <div class="w-full h-[520px] bg-[url('../src/assets/hero-back')] bg-cover bg-no-repeat bg-center flex flex-col justify-center items-center">
-        <div class="w-full mx-auto">
-            <form>
-                <div class="xl:w-1/2 lg:w-[60%] sm:w-[70%] w-[90%] mx-auto flex gap-2 md:mt-6 mt-4 mx-4">
-                    <input type="text" class="border border-gray-400 w-full p-2 rounded-md text-xl pl-2" placeholder="Rechercher une destination..." />
-                    <button type="submit" class="px-[10px] bg-blue-500 text-lg text-white rounded-md font-semibold">Search</button>
-                </div>
-            </form>
-        </div>
+  <section class="bg-gray-100 p-8 text-center">
+    <h2 class="text-2xl font-bold mb-4">Rechercher une destination</h2>
+    
+    <div class="flex justify-center gap-4">
+        <input type="text" class="border p-2 rounded-lg w-full md:w-1/2" placeholder="Où voulez-vous aller ?" />
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold">Chercher</button>
     </div>
   </section>
 
-  <!-- Contenu Principal avec la grille des logements -->
-  <main class="flex-grow py-10 px-5 max-w-[1200px] mx-auto w-full">
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
+  <main class="flex-grow p-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       {#if loading}
         <p>Chargement des logements en cours...</p>
       {:else if error}
@@ -104,12 +89,12 @@
     </div>
   </main>
 
-  <footer class="bg-gray-200 text-white py-4 px-3 mt-auto">
-    <div class="w-full md:w-1/2 md:text-center md:mb-0 mb-8 mx-auto">
-      <ul class="list-reset flex justify-center flex-wrap text-xs md:text-sm gap-3">
-        <li><a href="#contactUs" class="text-gray-500 hover:text-gray-800 transition-colors">Contact</a></li>
-        <li class="mx-4"><a href="/privacy" class="text-gray-500 hover:text-gray-800 transition-colors">Privacy Policy</a></li>
-      </ul>
+  <footer class="p-4 bg-gray-200 text-center text-gray-600 mt-auto">
+    <p>&copy; 2026 - Plateforme de location de ski</p>
+    <div class="flex justify-center gap-4 mt-2">
+        <a href="#contact" class="hover:text-blue-500">Contact</a>
+        <a href="#privacy" class="hover:text-blue-500">Privacy Policy</a>
     </div>
   </footer>
+
 </div>
