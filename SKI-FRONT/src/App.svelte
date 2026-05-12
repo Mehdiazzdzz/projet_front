@@ -1,52 +1,37 @@
 <script>
+  import { onMount } from "svelte";
   import LogementCard from "./LogementCard.svelte";
 
   /** @type {any[]} */
   let logements = [];
+  
+  /** @type {string | null} */
+  let error = null;
+  let loading = true; 
 
   const getLogements = async () => {
-    const res = await fetch("/api/logements");
-    logements = await res.json();
+    loading = true;
+    error = null;
+    
+    try {
+      const res = await fetch("/api/logements");
+      logements = await res.json();
+    } catch (e) {
+      error = "Impossible de charger les logements";
+    }
+    
+    loading = false;
   };
 
-  getLogements();
+  onMount(() => {
+    getLogements();
+  });
 
-  async function ajouterLogement() {
-    const nouveauLogement = {
-      nom: "Nouveau Chalet",
-      ville: "Courchevel",
-      prix: 250,
-      capacite: 4,
-      description: "Superbe chalet avec vue",
-      imageUrl: "https://picsum.photos/600/400?7"
-    };
-
-    try {
-      const res = await fetch("/api/logements", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(nouveauLogement)
-      });
-
-      if (res.ok) {
-        const logementCree = await res.json();
-        logements = [...logements, logementCree];
-      } else {
-        console.error("L'API a refusé l'ajout.");
-      }
-    } catch (error) {
-      console.error("Erreur réseau lors de l'ajout :", error);
-    }
-  }
-
-  // 2. Supprimer un logement 
   /** @param {string} id */
   async function supprimerLogement(id) {
     try {
       const res = await fetch(`/api/logements/${id}`, {
-        method: "DELETE" // Méthode pour supprimer
+        method: "DELETE"
       });
 
       if (res.ok) {
@@ -55,7 +40,7 @@
         console.error("L'API n'a pas pu supprimer ce logement.");
       }
     } catch (error) {
-      console.error("Erreur réseau lors de la suppression :", error);
+      console.error("Erreur lors de la suppression :", error);
     }
   }
 </script>
@@ -66,17 +51,26 @@
       <img src="/logo.svg" alt="Logo" class="logo" />
       <h1>Ski-Location</h1>
     </div>
-    <button class="btn-ajouter" on:click={ajouterLogement}>+ Ajouter</button>
+    <div class="header-actions">
+    <button class="btn" type="button">+ Ajouter</button>
+    <button class="btn" type="button"> Se connecter </button>
+</div>
   </header>
 
   <main>
     <div class="grid">
-      {#each logements as logement (logement.id)}
-        <LogementCard 
-          sejour={logement} 
-          on:delete={() => supprimerLogement(logement.id)} 
-        />
-      {/each}
+      {#if loading}
+        <p>Chargement des logements en cours...</p>
+      {:else if error}
+        <p style="color: red;">{error}</p>
+      {:else}
+        {#each logements as logement (logement.id)}
+          <LogementCard 
+            sejour={logement} 
+            handleDelete={() => supprimerLogement(logement.id)} 
+          />
+        {/each}
+      {/if}
     </div>
   </main>
 
@@ -84,9 +78,7 @@
     <p>&copy; 2026 - Plateforme de location de ski</p>
   </footer>
 </div>
-
 <style>
-  /*style de la page*/
   .layout {
     display: flex;
     flex-direction: column;
@@ -94,7 +86,7 @@
   }
 
   header {
-    background-color: #52489C;
+    background-color: #8d84ce;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
@@ -117,18 +109,32 @@
     color: #111827;
   }
 
-  .btn-ajouter {
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* --- Style unifié pour les boutons --- */
+  .btn {
     background-color: #111827;
     color: white;
     border: none;
-    padding: 10px 20px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 160px;
+    gap: 8px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
   }
 
-  .btn-ajouter:hover {
+  .btn:hover {
     background-color: #374151;
+    transform: translateY(-2px);
   }
 
   main {

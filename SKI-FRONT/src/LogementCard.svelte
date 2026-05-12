@@ -1,12 +1,7 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   export let sejour;
-
-  const dispatch = createEventDispatcher();
-
-  function handleDelete() {
-    dispatch('delete');
-  }
+  export let handleDelete;
+  
 </script>
 
 <div class="card">
@@ -14,11 +9,10 @@
   <div class="container">
     <h3>{sejour.nom}</h3>
     <p><b>Ville :</b> {sejour.ville}</p>
-    <p>{sejour.description}</p>
-    <p><b>Capacité :</b> {sejour.capacite} personnes</p>
     <div class="footer-card">
       <p class="price">{sejour.prix} € / nuit</p>
       <button class="btn-supprimer" on:click={handleDelete}>Supprimer</button>
+      <button class="btn-modifier" on:click={handleDelete}>modifier</button>
     </div>
   </div>
 </div>
@@ -39,7 +33,7 @@
 
   img {
     width: 100%;
-    height: 200px;
+    height: 50%;
     object-fit: cover;
   }
 
@@ -62,6 +56,7 @@
     margin: 0;
   }
 
+  .btn-modifier,
   .btn-supprimer {
     background-color: #e74c3c;
     color: white;
@@ -72,6 +67,7 @@
     font-size: 0.9em;
   }
 
+  .btn-modifier:hover,
   .btn-supprimer:hover {
     background-color: #c0392b;
   }
