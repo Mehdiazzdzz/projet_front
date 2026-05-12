@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import LogementCard from "./LogementCard.svelte";
+  import AjouterLogement from "./AjouterLogement.svelte"; 
   import './app.css';
 
   /** @type {any[]} */
@@ -9,6 +10,24 @@
   /** @type {string | null} */
   let error = null;
   let loading = true; 
+
+  let pageActuelle = "accueil"; 
+
+  function allerVersAjout() {
+    pageActuelle = "ajouter";
+  }
+
+  function allerVersAccueil() {
+    pageActuelle = "accueil";
+  }
+
+  /** @param {any} nouveauLogement */
+  function gererAjout(nouveauLogement) {
+    if (nouveauLogement) {
+      logements = [nouveauLogement, ...logements];
+    }
+    pageActuelle = "accueil";
+  }
 
   const getLogements = async () => {
     loading = true;
@@ -48,49 +67,65 @@
 
 <div class="flex flex-col min-h-screen">
   
-  <header class="flex justify-between items-center p-4 bg-white shadow">
-    <div class="flex items-center gap-2">
-        <h1 class="text-2xl font-bold">Ski-Location</h1>
-    </div>
+  <header class="flex flex-col md:flex-row justify-between items-center p-4 from-gray-300 to-white bg-gradient-to-b">
+    
+    <button type="button" class="flex items-center gap-2 cursor-pointer group">
+        <h1 class="text-lg md:text-xl font-bold group-hover:text-blue-600 transition-colors m-0">Ski-Location</h1>
+    </button>
 
-    <div class="flex gap-4">
-        <button class="border border-blue-500 text-blue-500 px-4 py-2 rounded-lg">
+    <div class="flex flex-wrap justify-center gap-2 md:gap-4">
+        <button on:click={allerVersAjout} class="border border-green-500 text-green-500 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-sm md:text-base hover:bg-green-50 transition-colors">
             + Ajouter
         </button>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">
+        
+        <button class="border border-blue-500 text-blue-500 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-sm md:text-base hover:bg-blue-50 transition-colors">
+            S'inscrire
+        </button>
+        
+        <button class="bg-blue-500 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-sm md:text-base font-semibold hover:bg-blue-600 transition-colors">
             Se connecter
         </button>
     </div>
   </header>
 
-  <section class="bg-gray-100 p-8 text-center">
-    <h2 class="text-2xl font-bold mb-4">Rechercher une destination</h2>
+  {#if pageActuelle === "accueil"}
     
-    <div class="flex justify-center gap-4">
-        <input type="text" class="border p-2 rounded-lg w-full md:w-1/2" placeholder="Où voulez-vous aller ?" />
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold">Chercher</button>
-    </div>
-  </section>
+    <section class="bg-gradient-to-b from-white to-gray-300 p-8 text-center">
+      <h1 class="text-xl font-bold mb-4">Rechercher une destination</h1>
+      
+      <div class="flex justify-center gap-4">
+          <input type="text" class="border p-2 rounded-lg w-full md:w-1/2" placeholder="Où voulez-vous aller ?" />
+          <button class="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold">Chercher</button>
+      </div>
+    </section>
 
-  <main class="flex-grow p-4">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {#if loading}
-        <p>Chargement des logements en cours...</p>
-      {:else if error}
-        <p class="text-red-500">{error}</p>
-      {:else}
-        {#each logements as logement (logement.id)}
-          <LogementCard 
-            sejour={logement} 
-            handleDelete={() => supprimerLogement(logement.id)} 
-          />
-        {/each}
-      {/if}
-    </div>
-  </main>
+    <main class="flex-grow p-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {#if loading}
+          <p>Chargement des logements en cours...</p>
+        {:else if error}
+          <p class="text-red-500">{error}</p>
+        {:else}
+          {#each logements as logement (logement.id ?? logement._id)}
+            <LogementCard 
+              sejour={logement} 
+              handleDelete={() => supprimerLogement(logement.id ?? logement._id)} 
+            />
+          {/each}
+        {/if}
+      </div>
+    </main>
 
-  <footer class="p-4 bg-gray-200 text-center text-gray-600 mt-auto">
-    <p>&copy; 2026 - Plateforme de location de ski</p>
+  {:else if pageActuelle === "ajouter"}
+    
+    <main class="flex-grow p-4">
+      <AjouterLogement onAjoute={gererAjout} onAnnule={allerVersAccueil} />
+    </main>
+
+  {/if}
+
+  <footer class="p-4 from-white to-gray-300 bg-gradient-to-b text-center text-gray-600 mt-auto">
+    <p>&copy; 2026 - Plateforme de location</p>
     <div class="flex justify-center gap-4 mt-2">
         <a href="#contact" class="hover:text-blue-500">Contact</a>
         <a href="#privacy" class="hover:text-blue-500">Privacy Policy</a>
