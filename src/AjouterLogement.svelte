@@ -1,8 +1,6 @@
 <script>
-  /** @type {(logement: any) => void} */
-  export let onAjoute = () => {};
-  /** @type {() => void} */
-  export let onAnnule = () => {};
+  import { push } from "svelte-spa-router";
+
 
   let nom = "";
   let ville = "";
@@ -28,16 +26,7 @@
       });
 
       if (res.ok) {
-        const cree = await res.json();
-        
-        onAjoute(cree);
-
-        nom = "";
-        ville = "";
-        prix = 0;
-        imageUrl = "";
-        capacite = 1;
-        description = "";
+        push("/");
       } else {
         erreur = "Erreur lors de l'ajout du logement. Vérifiez les informations et réessayez.";
       }
@@ -89,7 +78,7 @@
     </div>
 
     <div class="flex gap-4 mt-4">
-      <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-lg w-full hover:bg-gray-600 transition-colors" on:click={onAnnule}>
+      <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-lg w-full hover:bg-gray-600 transition-colors" on:click={() => push("/")}>
         Annuler
       </button>
       <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg w-full font-bold hover:bg-green-600 transition-colors">
