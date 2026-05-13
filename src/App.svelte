@@ -69,8 +69,8 @@
   
   <header class="flex flex-col md:flex-row justify-between items-center p-4 from-gray-300 to-white bg-gradient-to-b">
     
-    <button type="button" class="flex items-center gap-2 cursor-pointer group">
-        <h1 class="text-lg md:text-xl font-bold group-hover:text-blue-600 transition-colors m-0">Ski-Location</h1>
+    <button type="button" on:click={allerVersAccueil} class="flex items-center gap-2 cursor-pointer group">
+        <img src="/logo.svg" alt="Logo Ski-Location" class="h-20 w-auto" />
     </button>
 
     <div class="flex flex-wrap justify-center gap-2 md:gap-4">
