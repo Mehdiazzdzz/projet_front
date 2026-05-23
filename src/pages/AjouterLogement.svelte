@@ -6,16 +6,16 @@
   let ville = "";
   let prix = 0;
   let imageUrl = "";
-  let capacite = 1; 
+  let capacite = 1;
   let description = "";
   /** @type {string | null} */
   let erreur = null;
 
   async function handleSubmit() {
     erreur = null;
-    const nouveauLogement = { 
+    const nouveauLogement = {
       nom, ville, prix, capacite, description, imageUrl,
-      proprietaireId: "69f8b01a50b9a786a524fd2d" 
+      proprietaireId: "69f8b01a50b9a786a524fd2d"
     };
 
     try {
