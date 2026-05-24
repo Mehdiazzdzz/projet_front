@@ -70,6 +70,15 @@ src/
 - envoi d'une requête `POST /api/reservations`
 - bouton permettant de modifier le logement
 
+### Connexion et réservation
+
+- authentification simulée via le formulaire de connexion
+- l'utilisateur se connecte avec un email existant de propriétaire
+- la session est maintenue localement dans `localStorage`
+- le détail du logement propose un modal de réservation
+- le formulaire envoie : `logementId`, `locataireId`, `dateArrivee`, `dateDepart`
+- les réservations sont ajoutées sur le backend via `/api/reservations`
+
 ### Ajout et modification
 
 - formulaire de création d'un logement
@@ -77,6 +86,15 @@ src/
 - envoi de données JSON vers le backend
 - `POST /api/logements` pour créer
 - `PUT /api/logements/:id` pour mettre à jour
+
+### Connexion et Inscription
+
+- formulaires de connexion et de création de compte
+- simulation de l'authentification en l'absence de l'API définitive
+- vérification de l'email en parcourant les propriétaires existants via `GET /api/logements`
+- sauvegarde du profil utilisateur dans le `localStorage` pour maintenir la session active
+- redirection visuelle simple pour la page d'inscription sans requête serveur
+
 
 ## API attendue
 

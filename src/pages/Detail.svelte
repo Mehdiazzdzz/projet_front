@@ -44,8 +44,9 @@
 
     const payload = {
       logementId: params.id,
-      dateDebut: dateDebut,
-      dateFin: dateFin
+      locataireId: "69f8b01a50b9a786a524fd2d",
+      dateArrivee: dateDebut,
+      dateDepart: dateFin
     };
 
     try {

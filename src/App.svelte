@@ -7,6 +7,7 @@
   import NotFound from "./pages/NotFound.svelte";
   import Login from "./pages/Login.svelte";
   import Register from "./pages/Register.svelte";
+  import MesReservations from "./pages/MesReservations.svelte";
   import './app.css';
 
   const routes = {
@@ -15,6 +16,7 @@
     "/logements/:id": Detail,
     "/logements/edit/:id": ModifierLogement,
     "/connexion": Login,
+    "/mes-reservations": MesReservations,
     "/inscription": Register,
     "*": NotFound
   };
